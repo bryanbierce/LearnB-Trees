@@ -1,7 +1,7 @@
 // This will do a depth first crawl through the tree
   // It will check that the number of values at each node is less than the order
   // It will return true if this holds for all nodes; otherwise it will return false
-  function sizeTest(bTree){
+  function minNodeSizeTest(bTree){
     var size = true;
     function traverseTree(bTree){
       size = (bTree.values.length < bTree.order) ? size : false;
@@ -45,9 +45,9 @@
     traverseTree(bTree);
     return even;
   };
-  // This will do a depth first crawl through the tree 
+  // This will do a depth first crawl through the tree
   // It will compare the number of children to the order of the tree and check for equality
-  // It will return true if all nodes with children are in accordance with the order; otherwise it returns false 
+  // It will return true if all nodes with children are in accordance with the order; otherwise it returns false
   function dispersionTest(bTree){
     var order = true;
     function traverseTree(bTree){
