@@ -14,10 +14,18 @@ describe('Btree()', function () {
     expect(bTree.contains).to.be.a('function');
   });
 
-  it('should take a paramater and set an order', function(done){
-    expect(bTree.order).to.be.a('number');
+  it('should take a parameter to set the order', function(done){
+    expect(typeof bTree.order).to.be.a('number');
+    expect(bTree.order).to.be(3);
   });
 
+  it('a node should have a values property that is an array', function(){
+    expect(Array.isArray(bTree.values)).to.be(true);
+  });
+
+  it('should have a children property that is an array', function(){
+    expect(Array.isArray(bTree.children)).to.be.(true);
+  });
 
   it('should be able to add values', function(){
     bTree.add(7);
@@ -51,7 +59,7 @@ describe('Btree()', function () {
     expect(bTree.contains(13)).to.equal(true);
   });
 
-  it('should have nodes which contain at least 1 less value than it\'s order', function(){
+  it('should have nodes & leaves which contain at least 1 less value than it\'s order, unless the root which may have as few as 1', function(){
     bTree.add(7);
     bTree.add(8);
     bTree.add(9);
@@ -64,7 +72,7 @@ describe('Btree()', function () {
 
   });
 
-  it('should have nodes which contain at most 2*order-1 values', function(){
+  it('should have nodes & leaves which contain at most 2*order-1 values, including the root', function(){
     bTree.add(7);
     bTree.add(8);
     bTree.add(9);

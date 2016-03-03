@@ -1,22 +1,17 @@
 // This will do a depth first crawl through the tree
 // It will check that the number of values at each node is less than the order
 // It will return true if this holds for all nodes; otherwise it will return false
-function minNodeSizeTest(bTree){
-  var size = true;
-  function traverseTree(bTree){
-    size = (bTree.values.length < bTree.order) ? size : false;
-    var childLength = bTree.children.length;
-    if(childLength){
-      for(var i = 0; i < childLength; i++){
-        traverseTree(bTree.children[i]);
-      }
-    }
-  };
+function minNodeSizeTest(node, child){
+  var size = (child && node.values.length >= node.order-1) ? size : false;
+  if(!size) return false;
 
-  traverseTree(bTree);
+  for(var i = 0; i < childLength; i++){
+    if( !minNodeSizeTest(node.children[i], true) ) return false;
+  }
 
-  return size;
+  return true;
 };
+
 // This will do a depth first crawl through the tree
 // It will compare all branch end depths to the greatest depth yet found.
 // It will then return true if the depth is even throughout or false if not
