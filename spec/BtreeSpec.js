@@ -105,5 +105,20 @@ describe('Btree()', function () {
     bTree.add(13);
     expect(dispersionTest(bTree)).to.equal(true);
   });
-  it('should ')
+
+  it('should return a sorted array from a depth first log', function(){
+    bTree.add(7);
+    bTree.add(8);
+    bTree.add(9);
+    expect(R.compose(isSorted, depthFirstLog)(bTree)).to.equal(true);
+    bTree.remove(9);
+    expect(R.compose(isSorted, depthFirstLog)(bTree)).to.equal(true);
+    bTree.add(9);
+    bTree.add(10);
+    bTree.add(11);
+    bTree.add(12);
+    bTree.add(13);
+    expect(R.compose(isSorted, depthFirstLog)(bTree)).to.equal(true);
+  });
+
 });
