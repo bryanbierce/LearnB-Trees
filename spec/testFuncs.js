@@ -15,60 +15,49 @@ function minNodeSizeTest(node, child){
 // This will do a depth first crawl through the tree
 // It will compare all branch end depths to the greatest depth yet found.
 // It will then return true if the depth is even throughout or false if not
-function depthTest(bTree){
-  var depth = 0;
-  var maxDepth = 0;
-  var even = true;
-  function traverseTree(bTree){
-    depth++;
-    var childLength = bTree.children.length;
-    if(!childLength){
-      if(maxDepth === 0){
-        maxDepth = depth;
-      }else if(maxDepth !== depth){
-        even = false;
-      }
-      depth--;
-    }else{
-      for(var i = 0; i < childLength; i++){
-        traverseTree(bTree.children[i]);
-        depth--;
-      }
-    }
-  };
+function depthTest(node, depth, maxDepth){
+  depth = depth || 0;
+  maxDepth = maxDepth || [];
+  if(!node.children.length) {
+    if(!maxDepth.length) maxDepth.push(depth);
+    return maxDepth[0] === depth;
+  }
+  for(var i = 0; i < node.children.length; i++){
+    if( !depthTest(node.children[i], depth+1, maxDepth) ) return false;
+  }
 
-  traverseTree(bTree);
-  return even;
+  return true;
 };
 // This will do a depth first crawl through the tree
 // It will compare the number of children to the order of the tree and check for equality
 // It will return true if all nodes with children are in accordance with the order; otherwise it returns false
-function dispersionTest(bTree){
-  var order = true;
-  function traverseTree(bTree){
-    var childLength = bTree.children.length;
-    if(childLength){
-      order = (childLength === bTree.order) ? order : false;
+function dispersionTest(node) {
+  if(node.children) {
+    if(node.children.length !== node.values.length+1) return false;
+    for(var i=0; i < node.children.length; i++) {
+      if(!dispersionTest(node.children[i])) return false;
     }
-    if(order && childLength){
-      for(var i = 0; i < childLength; i++){
-        traverseTree(bTree.children[i]);
-      }
-    }
-  };
-
-  traverseTree(bTree);
-  return order;
+  }
+  return true;
 };
 
-function depthFirstLog(bTree){
-
+function depthFirstLog(node, log) {
+  log = log || [];
+  if(!node.children.length) log = log.concat(node.values);
+  else {
+    for(var i= 0; i < node.values.length; i++) {
+      depthFirstLog(node.children[i], state);
+      log.push(node.values[i]);
+    }
+    depthFirstLog(node.children[i+1]);
+  }
+  return log;
 }
 
-function isSorted(arr){
+function isSorted(arr) {
   var i = -1;
   while(arr[(++i)+1]){
-    if(arr[i] > arr[i+1])return false;
+    if(arr[i] > arr[i+1]) return false;
   }
   return true;
 }

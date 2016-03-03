@@ -99,7 +99,7 @@ describe('Btree()', function () {
     expect(depthTest(bTree)).to.equal(true);
   });
 
-  it('all nodes should have order+1 children', function(){
+  it('all nodes should have children equal to its number of keys +1', function(){
     bTree.add(7);
     bTree.add(8);
     bTree.add(9);
